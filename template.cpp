@@ -133,7 +133,7 @@ namespace socho_math {
 		return (x * factorial(x - 1)) % mod;
 	}
 	
-	vector<int> calculate_factorials(int n, int mod=MOD) {
+	vector<int> generate_factorials(int n, int mod=MOD) {
 		vector<int> result(n+1);
 		result[0] = 1;
 		for (int i=1; i<=n; i++) {
@@ -158,7 +158,7 @@ namespace socho_math {
 		return power(x, mod-2, mod);
 	}
 	
-	vector<int> calculate_inverses(vector<int> source, int mod=MOD) {
+	vector<int> generate_inverses(vector<int> source, int mod=MOD) {
 		vector<int> result(source.size());
 		for (int i=0; i<source.size(); i++) {
 			result[i] = power(source[i], mod-2, mod);
@@ -170,6 +170,10 @@ namespace socho_math {
 		if (r < 0 || r > n) return 0;
 		int ans = (factorials[n] * inverses[r]) % mod;
 		return (ans * inverses[n-r]) % mod;
+	}
+	
+	int ways(int a, int b, vector<int> &factorials, vector<int> &inverses, int mod=MOD) {
+		return ncr(a - 1 + b - 1, a - 1, factorials, inverses, mod);
 	}
 	
 	vector<vector<int>> generate_ncr(int n, int r, int mod=MOD) {
@@ -221,6 +225,41 @@ namespace socho_math {
 		return n * (n - 1) / 2;
 	}
 	
+	int divup(int a, int b) {
+		return (a + b - 1) / b;
+	}
+	
+	int ceildiv(int a, int b) {
+		return divup(a, b);
+	}
+	
+	int divceil(int a, int b) {
+		return divup(a, b);
+	}
+	
+	double distance(pair<double, double> a, pair<double, double> b) {
+		return sqrt((a.first - b.first) * (a.first - b.first) + (a.second - b.second) * (a.second - b.second));
+	}
+	
+	int square(int x) {
+		return x * x;
+	}
+	
+	vector<int> frequency_alphabet(string s) {
+		vector<int> result(26, 0);
+		for (auto x: s) {
+			if (x >= 'a' && x <= 'z') result[x - 'a']++;
+			else if (x >= 'A' && x <= 'Z') result[x - 'A']++;
+		}
+		return result;
+	}
+	
+	map<char, int> frequency_all(string s) {
+		map<char, int> r;
+		for (auto x: s) r[x]++;
+		return r;
+	}
+	
 }
 namespace socho_graph {
 	
@@ -229,16 +268,21 @@ namespace socho_graph {
 	
 	struct graph {
 		
-		bool dir;
-		int index;
-		int n, m;
-		bool wgt;
+		bool dir=false;
+		int index=1;
+		int n=0, m=0;
+		bool wgt=false;
 		vector<vector<pair<int, pair<int, int>>>> adj; // other, distance, index
 		vector<pair<pair<int, int>, pair<int, int>>> edges; // distance, index, a, b
 		
+		void set_n(int newn) {
+			n = newn;
+			adj.resize(n + index);
+		}
+		
 		void read_n() {
 			cin >> n;
-			adj.resize(n + index);
+			set_n(n);
 		}
 		
 		void set_index(int i) {
@@ -273,6 +317,7 @@ namespace socho_graph {
 		graph() {
 			// blank graph with nothing.
 			dir = index = n = m = 0;
+			wgt = false;
 		}
 		
 		graph(int indexing, bool weighted=false, bool directed=false) {
@@ -295,6 +340,7 @@ namespace socho_graph {
 			m = copyfrom.m;
 			adj = copyfrom.adj;
 			edges = copyfrom.edges;
+			wgt = copyfrom.wgt;
 		}
 		
 		graph inverse() {
@@ -317,7 +363,7 @@ namespace socho_graph {
 			return other;
 		}
 		
-		void set_n(int ne, int indexing=0) {
+		void set_n(int ne, int indexing) {
 			index = indexing;
 			n = ne;
 			adj.resize(n + index);
@@ -358,6 +404,26 @@ namespace socho_graph {
 			return distances(x)[y];
 		}
 		
+		vector<int> get_path(int from, int to) {
+			vector<int> d1 = distances(from);
+			vector<int> d2 = distances(to);
+			if (d1[to] == INFDIST) {
+				return vector<int>();
+			}
+			vector<pair<int, int>> nodes;
+			vector<int> result;
+			for (int i=index; i<index+n; i++) {
+				if (d1[i] + d2[i] == d1[to]) {
+					nodes.push_back({d1[i], i});
+				}
+			}
+			sort(nodes.begin(), nodes.end());
+			for (auto x: nodes) {
+				result.push_back(x.second);
+			}
+			return result;
+		}
+		
 		vector<vector<int>> distances_all() {
 			vector<vector<int>> dist(n+index);
 			for (int k=index; k<index+n; k++) {
@@ -370,7 +436,7 @@ namespace socho_graph {
 	
 	struct tree: graph {
 		
-		int tree_root;
+		int tree_root=0;
 		
 		tree() {
 			// blank graph with nothing.
@@ -380,6 +446,7 @@ namespace socho_graph {
 		void read_n() {
 			cin >> n;
 			m = n - 1;
+			set_n(n);
 		}
 		
 		void set_index(int i) {
@@ -482,20 +549,33 @@ namespace socho_graph {
 			return find_diameter().first;
 		}
 		
+		vector<int> markings;
+		
+		void mark(int node, int parent=-1, int with=0) {
+			if (markings.empty()) markings = vector<int>(n+index, -1);
+			markings[node] = with;
+			for (auto x: adj[node]) {
+				if (x.first == parent) continue;
+				mark(x.first, node, with);
+			}
+		}
+		
 	};
 	
 	struct ufds {
 		
-		int n, index;
-		int components;
+		int n=0, index=0;
+		int components=0;
 		vector<int> parents;
 		
 		ufds() {
+			index = 0;
 			n = 0;
 			components = 0;
 		}
 		
 		ufds(graph a) {
+			index = a.index;
 			set_n(a.n);
 			for (auto edge: a.edges) {
 				int a = edge.second.first;
@@ -507,6 +587,7 @@ namespace socho_graph {
 		void set_n(int newn) {
 			n = newn;
 			parents.resize(n+index);
+			components = n;
 			for (int i=0; i<n+index; i++) parents[i] = i;
 		}
 		
@@ -515,11 +596,13 @@ namespace socho_graph {
 			return parents[n] = parent(parents[n]);
 		}
 		
-		void connect(int a, int b) {
+		bool connect(int a, int b) {
 			a = parent(a);
 			b = parent(b);
-			if (a == b) return;
+			if (a == b) return false;
 			parents[a] = b;
+			components--;
+			return true;
 		}
 		
 		bool are_connected(int a, int b) {
@@ -538,23 +621,130 @@ namespace socho_graph {
 			return results;
 		}
 		
+		vector<int> get_fingerprints() {
+			vector<int> result(n+index);
+			for (int i=index; i<n+index; i++) {
+				result[i] = parent(i);
+			}
+			return result;
+		}
+		
 	};
+	
+	graph mst(graph a) {
+		graph e;
+		e.set_n(a.n);
+		e.set_index(a.index);
+		vector<pair<pair<int, int>, pair<int, int>>> ed;
+		for (auto x: a.edges) {
+			ed.push_back(x);
+		}
+		sort(ed.begin(), ed.end());
+		ufds t;
+		t.index = a.index;
+		t.set_n(a.n);
+		for (auto x: ed) {
+			int w = x.first.first;
+			int a = x.second.first;
+			int b = x.second.second;
+			if (t.connect(a, b)) {
+				e.add_edge(a, b, w);
+			}
+		}
+		return e;
+	}
+	
+}
+
+namespace socho_utils {
+	
+	template<typename T>
+	int count(vector<T> items, T item) {
+		int a = 0;
+		for (auto x: items) {
+			if (x == item) a++;
+		}
+		return a;
+	}
+	
+	int count(vector<int> items, signed item) {
+		int a = 0;
+		for (auto x: items) {
+			if (x == item) a++;
+		}
+		return a;
+	}
+	
+	int max(int a, signed b) {
+		if (a > b) return a;
+		return b;
+	}
+	
+	int max(signed a, int b) {
+		if (a > b) return a;
+		return b;
+	}
+	
+	template<typename T>
+	T max(T a, T b, T c) {
+		if (a > b && a > c) return a;
+		if (b > c) return b;
+		return c;
+	}
+	
+	template<typename T>
+	T min(T a, T b, T c) {
+		if (a < b && a < c) return a;
+		if (b < c) return b;
+		return c;
+	}
+	
+	template<typename T>
+	int count_distinct(vector<T> s) {
+		set<T> e;
+		for (auto x: s) e.insert(x);
+		return e.size();
+	}
+	
+	void printif(bool e, string yes="Yes", string no="No") {
+		if (e) cout << yes << endl;
+		else cout << no << endl;
+	}
+	
+	double rati(int a, int b) {
+		return ((double) a) / ((double) b);
+	}
+	
+	vector<int> digits(int x) {
+		vector<int> result;
+		while (x > 0) {
+			result.push_back(x % 10);
+			x /= 10;
+		}
+		reverse(result.begin(), result.end());
+		return result;
+	}
+	
+	template<typename T>
+	int sum(vector<int> x) {
+		int s = 0;
+		for (auto a: x) s += a;
+		return s;
+	}
+	
 	
 }
 
 
 using namespace socho_math;
 using namespace socho_graph;
-
-
+using namespace socho_utils;
 // END TEMPLATE
-
-
 
 signed main() {
 
 	ran(); fast();
 	
 	
-	
+
 }
