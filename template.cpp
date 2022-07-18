@@ -706,6 +706,12 @@ namespace socho_utils {
 		return e.size();
 	}
 	
+	int count_distinct(string s) {
+		set<char> e;
+		for (auto x: s) e.insert(x);
+		return e.size();
+	}
+	
 	void printif(bool e, string yes="Yes", string no="No") {
 		if (e) cout << yes << endl;
 		else cout << no << endl;
@@ -732,6 +738,176 @@ namespace socho_utils {
 		return s;
 	}
 	
+	int inrange(int a, int b) {
+		if (a > b) return 0;
+		return b - a + 1;
+	}
+	
+	bool endswith(string a, string b) {
+		if (a.size() < b.size()) return false;
+		int x = b.size();
+		for (int i=0; i<b.size(); i++) {
+			if (a[a.size()-x] != b[i]) return false;
+			x--;
+		}
+		return true;
+	}
+	
+	void doubleprint() {
+		cout << fixed << setprecision(10);
+	}
+	
+	string padleft(string x, int len, char c='0') {
+		string s = x;
+		reverse(s.begin(), s.end());
+		while (s.length() < len) s += c;
+		reverse(s.begin(), s.end());
+		return s;
+	}
+	
+	string to_string(int a) {
+		auto d = digits(a);
+		string r = "";
+		for (auto x: d) {
+			r += ((char) '0' + x);
+		}
+		return r;
+	}
+	
+	
+	template<typename T>
+	vector<T> vector_input(int n, T x) {
+		vector<T> t;
+		for (int i=0; i<n; i++) {
+			T x;
+			cin >> x;
+			t.push_back(x);
+		}
+		return t;
+	}
+	
+	vector<int> vector_input(int n) {
+		vector<int> t;
+		for (int i=0; i<n; i++) {
+			int x;
+			cin >> x;
+			t.push_back(x);
+		}
+		return t;
+	}
+	
+	bool isuppercase(char x) {
+		return 'A' <= x && x <= 'Z';
+	}
+	
+	bool islowercase(char x) {
+		return 'a' <= x && x <= 'z';
+	}
+	
+	template<typename T>
+	map<T, int> frequency(vector<T> x) {
+		map<T, int> s;
+		for (auto a: x) {
+			s[a]++;
+		}
+		return s;
+	}
+	
+	template<typename T>
+	map<T, int> inverse(vector<T> x, int indexing=0, bool first=false) {
+		map<T, int> s;
+		int j = indexing;
+		for (auto a: x) {
+			if (first) {
+				if (s.find(a) != s.end()) {}
+				else s[a] = j;
+			}
+			else {
+				s[a] = j;
+			}
+			j++;
+		}
+		return s;
+	}
+	
+	template<typename T>
+	vector<T> inany(vector<T> a, vector<T> b) {
+		for (auto x: b) a.push_back(x);
+		auto r = frequency(a);
+		vector<T> res;
+		for (auto x: r) {
+			if (x.second == 1) continue;
+			res.push_back(x.first);
+		}
+		return res;
+	}
+	
+	template<typename T>
+	vector<T> inboth(vector<T> a, vector<T> b) {
+		auto r = frequency(a);
+		vector<T> j;
+		for (auto x: b) {
+			if (r[x]) j.push_back(x);
+		}
+		return j;
+	}
+	
+	int xor_all(vector<int> e) {
+		int a = 0;
+		for (auto x: e) a ^= x;
+		return a;
+	}
+	
+	string copies(string x, int copy) {
+		string r = "";
+		for (int i=0; i<copy; i++) r += x;
+		return r;
+	}
+	
+	bool substring(string x, string y) {
+		for (int i=0; i<x.size(); i++) {
+			bool ok = true;
+			for (int j=0; j<y.size(); j++) {
+				if (i + j >= x.size()) ok = false;
+				else if (x[i + j] != y[j]) ok = false;
+			}
+			if (ok) return true;
+		}
+		return false;
+	}
+	
+	template<typename T>
+	T min(vector<T> a) {
+		if (a.empty()) return T();
+		T x = a[0];
+		for (auto y: a) {
+			if (y < x) x = y;
+		}
+		return x;
+	}
+	
+	template<typename T>
+	T max(vector<T> a) {
+		if (a.empty()) return T();
+		T x = a[0];
+		for (auto y: a) {
+			if (y > x) x = y;
+		}
+		return x;
+	}
+	
+	template<typename T>
+	T max_key(map<T, int> a) {
+		T Tx;
+		int e = -1;
+		for (auto x: a) {
+			if (x.second > e) {
+				Tx = x.first;
+				e = x.second;
+			}
+		}
+		return Tx;
+	}
 	
 }
 
@@ -742,9 +918,10 @@ using namespace socho_utils;
 // END TEMPLATE
 
 signed main() {
-
-	ran(); fast();
+ 
+	ran(); fast(); // doubleprint();
+ 
 	
 	
-
+	
 }
