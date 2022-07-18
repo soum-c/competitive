@@ -245,19 +245,8 @@ namespace socho_math {
 		return x * x;
 	}
 	
-	vector<int> frequency_alphabet(string s) {
-		vector<int> result(26, 0);
-		for (auto x: s) {
-			if (x >= 'a' && x <= 'z') result[x - 'a']++;
-			else if (x >= 'A' && x <= 'Z') result[x - 'A']++;
-		}
-		return result;
-	}
-	
-	map<char, int> frequency_all(string s) {
-		map<char, int> r;
-		for (auto x: s) r[x]++;
-		return r;
+	double calculate_ratio(int a, int b) {
+		return ((double) a) / ((double) b);
 	}
 	
 }
@@ -655,7 +644,6 @@ namespace socho_graph {
 	}
 	
 }
-
 namespace socho_utils {
 	
 	template<typename T>
@@ -692,6 +680,16 @@ namespace socho_utils {
 		return c;
 	}
 	
+	int min(int a, signed b) {
+		if (a < b) return a;
+		return b;
+	}
+	
+	int min(signed a, int b) {
+		if (a < b) return a;
+		return b;
+	}
+	
 	template<typename T>
 	T min(T a, T b, T c) {
 		if (a < b && a < c) return a;
@@ -717,11 +715,8 @@ namespace socho_utils {
 		else cout << no << endl;
 	}
 	
-	double rati(int a, int b) {
-		return ((double) a) / ((double) b);
-	}
-	
 	vector<int> digits(int x) {
+		assert(x >= 0);
 		vector<int> result;
 		while (x > 0) {
 			result.push_back(x % 10);
@@ -730,15 +725,14 @@ namespace socho_utils {
 		reverse(result.begin(), result.end());
 		return result;
 	}
-	
-	template<typename T>
+
 	int sum(vector<int> x) {
 		int s = 0;
 		for (auto a: x) s += a;
 		return s;
 	}
 	
-	int inrange(int a, int b) {
+	int in_range(int a, int b) {
 		if (a > b) return 0;
 		return b - a + 1;
 	}
@@ -753,11 +747,11 @@ namespace socho_utils {
 		return true;
 	}
 	
-	void doubleprint() {
-		cout << fixed << setprecision(10);
+	void doubleprint(int precision=10) {
+		cout << fixed << setprecision(precision);
 	}
 	
-	string padleft(string x, int len, char c='0') {
+	string pad_left(string x, int len, char c='0') {
 		string s = x;
 		reverse(s.begin(), s.end());
 		while (s.length() < len) s += c;
@@ -766,6 +760,7 @@ namespace socho_utils {
 	}
 	
 	string to_string(int a) {
+		assert(a >= 0);
 		auto d = digits(a);
 		string r = "";
 		for (auto x: d) {
@@ -796,11 +791,11 @@ namespace socho_utils {
 		return t;
 	}
 	
-	bool isuppercase(char x) {
+	bool is_uppercase(char x) {
 		return 'A' <= x && x <= 'Z';
 	}
 	
-	bool islowercase(char x) {
+	bool is_lowercase(char x) {
 		return 'a' <= x && x <= 'z';
 	}
 	
@@ -831,7 +826,7 @@ namespace socho_utils {
 	}
 	
 	template<typename T>
-	vector<T> inany(vector<T> a, vector<T> b) {
+	vector<T> in_any(vector<T> a, vector<T> b) {
 		for (auto x: b) a.push_back(x);
 		auto r = frequency(a);
 		vector<T> res;
@@ -843,7 +838,7 @@ namespace socho_utils {
 	}
 	
 	template<typename T>
-	vector<T> inboth(vector<T> a, vector<T> b) {
+	vector<T> in_both(vector<T> a, vector<T> b) {
 		auto r = frequency(a);
 		vector<T> j;
 		for (auto x: b) {
@@ -899,7 +894,7 @@ namespace socho_utils {
 	template<typename T>
 	T max_key(map<T, int> a) {
 		T Tx;
-		int e = -1;
+		int e = LLONG_MIN;
 		for (auto x: a) {
 			if (x.second > e) {
 				Tx = x.first;
@@ -909,8 +904,22 @@ namespace socho_utils {
 		return Tx;
 	}
 	
+	vector<int> frequency_alphabet(string s) {
+		vector<int> result(26, 0);
+		for (auto x: s) {
+			if (x >= 'a' && x <= 'z') result[x - 'a']++;
+			else if (x >= 'A' && x <= 'Z') result[x - 'A']++;
+		}
+		return result;
+	}
+	
+	map<char, int> frequency(string s) {
+		map<char, int> r;
+		for (auto x: s) r[x]++;
+		return r;
+	}
+	
 }
-
 
 using namespace socho_math;
 using namespace socho_graph;
@@ -921,7 +930,6 @@ signed main() {
  
 	ran(); fast(); // doubleprint();
  
-	
 	
 	
 }
