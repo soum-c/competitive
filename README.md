@@ -44,7 +44,6 @@ Anyway here is a description of how to use every function in this template, in c
 
 This is included because using the `count` function mentioned above will not work with a vector of 64-bit values and an integer literal provided directly, which is sometimes useful in competitive programming. This works the same as above.
 
-
 #### `count_distinct`
 
 ##### 1. For vectors
@@ -63,7 +62,6 @@ This is included because using the `count` function mentioned above will not wor
 | Usage | `s` must be a string. `count_distinct(s)` returns the number of unique characters in `s`. |
 | Example | For example, the function called with `s = "dbcda"` will return `4`.  |
 
-
 #### `digits`
 
 | Description | Returns a vector of integers, representing the digits of a number. |
@@ -71,8 +69,6 @@ This is included because using the `count` function mentioned above will not wor
 | Signature | `vector<int> digits(int x)`  |
 | Usage | `x` must be an integer. `digits(x)` will return the vector of digits, in order, of `x`. Note that this function does not work with negative integers. |
 | Example | For example, `digits(8)` will return the vector `{8}` and `digits(1300)` will return the vector `{1, 3, 0, 0}`. |
-
-
 
 #### `doubleprint`
 
@@ -82,7 +78,9 @@ This is useful for many competitive programming problems seeking absolute or rel
 |---|:---|
 | Signature | `void doubleprint(int precision=10)`  |
 | Usage | `precision`, if provided, must be an integer. Otherwise, it will default to `10`. |
-| Example | For example, `doubleprint(5)` will output five digits after the decimal point (for any subsequent outputs). |#### `endswith`
+| Example | For example, `doubleprint(5)` will output five digits after the decimal point (for any subsequent outputs). |
+
+#### `endswith`
 
 | Description | Checks if a string has another string as its suffix |
 |---|:---|
@@ -261,23 +259,6 @@ This is useful for yes/no and true/false problems on CodeForces and AtCoder.
 | Signature | `int xor_all(vector<int> e)`  |
 | Usage | `e` must be a vector of integers. `xor_all(e)` will return the xor of all integers in the vector. |
 | Example | `xor_all({1, 4, 5, 3})` returns `3`. |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ## `socho_math`: math (usually number) things I seem to be using often
 
