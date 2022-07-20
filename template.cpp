@@ -508,7 +508,7 @@ namespace socho_graph {
 			return distance_util[a][0];
 		}
 		
-		int dist(int a, int b) {
+		int distance(int a, int b) {
 			if (distance_util.empty()) setup_distances(tree_root);
 			int l = lca(a, b);
 			int m = 0;
@@ -725,12 +725,6 @@ namespace socho_utils {
 		reverse(result.begin(), result.end());
 		return result;
 	}
-
-	int sum(vector<int> x) {
-		int s = 0;
-		for (auto a: x) s += a;
-		return s;
-	}
 	
 	int in_range(int a, int b) {
 		if (a > b) return 0;
@@ -759,15 +753,7 @@ namespace socho_utils {
 		return s;
 	}
 	
-	string to_string(int a) {
-		assert(a >= 0);
-		auto d = digits(a);
-		string r = "";
-		for (auto x: d) {
-			r += ((char) '0' + x);
-		}
-		return r;
-	}
+	
 	
 	
 	template<typename T>
@@ -826,12 +812,22 @@ namespace socho_utils {
 	}
 	
 	template<typename T>
+	map<T, vector<int>> inverses(vector<T> x, int indexing=0) {
+		map<T, vector<int>> s;
+		int j = indexing;
+		for (auto a: x) {
+			s[a].push_back(j);
+			j++;
+		}
+		return s;
+	}
+	
+	template<typename T>
 	vector<T> in_any(vector<T> a, vector<T> b) {
 		for (auto x: b) a.push_back(x);
 		auto r = frequency(a);
 		vector<T> res;
 		for (auto x: r) {
-			if (x.second == 1) continue;
 			res.push_back(x.first);
 		}
 		return res;
@@ -919,6 +915,80 @@ namespace socho_utils {
 		return r;
 	}
 	
+	int mex(vector<int> items, int from=0) {
+		auto r = frequency(items);
+		while (true) {
+			if (r[from] == 0) {
+				return from;
+			}
+			from++;
+		}
+	}
+	
+	bool is_superset(vector<int> a, vector<int> b) {
+		auto r = frequency(a), s = frequency(b);
+		for (auto x: s) {
+			if (r[x.first] < x.second) return false;
+		}
+		return true;
+	}
+	
+	bool is_subset(vector<int> a, vector<int> b) {
+		return is_superset(b, a);
+	}
+	
+	void sort(string &s) {
+		sort(s.begin(), s.end());
+	}
+	
+	template<typename T>
+	void sort(vector<T> &s) {
+		sort(s.begin(), s.end());
+	}
+	
+	vector<pair<int, int>> interval_union(vector<pair<int, int>> intervals) {
+		int op = 0, c = 0;
+		vector<pair<int, int>> eve, res;
+		for (auto x: intervals) {
+			eve.push_back({x.first, -1});
+			eve.push_back({x.second, 1});
+		}
+		sort(eve);
+		for (auto x: eve) {
+			x.second *= -1;
+			if (c > 0 && c + x.second == 0) {
+				res.push_back({op, x.first});
+			}
+			else if (c == 0 && c + x.second == 1) {
+				op = x.first;
+			}
+			c += x.second;
+		}
+		return res;
+	}
+	
+	char to_upper(char a) {
+		if (a >= 'a' && a <= 'z') a += 'A' - 'a';
+		return a;
+	}
+	
+	string to_upper(string a) {
+		string x = "";
+		for (auto b: a) x += to_upper(b);
+		return x;
+	}
+	
+	char to_lower(char a) {
+		if (a >= 'A' && a <= 'Z') a += 'a' - 'A';
+		return a;
+	}
+	
+	string to_lower(string a) {
+		string x = "";
+		for (auto b: a) x += to_lower(b);
+		return x;
+	}
+	
 }
 
 using namespace socho_math;
@@ -928,8 +998,8 @@ using namespace socho_utils;
 
 signed main() {
  
-	ran(); fast(); // doubleprint();
- 
+	ran(); fast(); doubleprint();
+	
 	
 	
 }
