@@ -138,6 +138,14 @@ This is useful for many competitive programming problems seeking absolute or rel
 | Usage | `a` must be an integer. `b` must be an integer. `inrange(a, b)` will return the number of integers in `[a, b]` |
 | Example | For example, `inrange(5, 8)` will return the integer `4` (since 5, 6, 7 and 8 are in the range) while `inrange(3, 1)` will return `0`, since it checks for numbers greater than or equal to `3`, as well as less than or equal to `1`, of which there are none. |
 
+#### `interval_union`
+
+| Description | Calculates the union of a set of given intervals. |
+|---|:---|
+| Signature | `vector<pair<int, int>> interval_union(vector<pair<int, int>> intervals)`  |
+| Usage | `intervals` must be a vector of intervals, represented as pairs.  |
+| Example | For example, `interval_union({{4, 5}, {5, 8}, {10, 14}, {11, 12}})` will return `{{4, 8}, {10, 14}}`. |
+
 #### `inverse`
 
 | Description | Returns a map containing every element and the index of the element in the vector. |
@@ -145,6 +153,16 @@ This is useful for many competitive programming problems seeking absolute or rel
 | Signature | `map<T, int> inverse(vector<T> x, int indexing=0, bool first=false)`  |
 | Usage |  `x` must be a vector of elements of any type `T`. `indexing`, if provided must be an integer. `first`, if provided, must be a boolean. `inverse(x, indexing, first)` returns a map containing every element in `x` as well as the last index it occurs at, using `indexing`-indexing (0 or 1 are conventional), unless `first` is true, in which case the first index will be used. |
 | Example | For example, `inverse({1, 2, 4, 1})` will return `{1: 3, 2: 1, 4: 2}`. If `indexing` is set to `1`, it will instead return `{1: 4, 2: 2, 4: 3}`. If `indexing` is set to `1` and `first` is set to `true`, it will instead return `{1: 1, 2: 2, 4: 3}`. |
+
+#### `inverses`
+
+| Description | Returns a map containing every element and every index containing that element. |
+|---|:---|
+| Signature | `map<T, vector<int>> inverses(vector<T> x, int indexing=0)`  |
+| Usage |  `x` must be a vector of elements of any type `T`. `indexing`, if provided must be an integer. `inverses(x, indexing)` returns a map containing every element in `x` as well as all indexes it occurs at in a vextor, using `indexing`-indexing (0 or 1 are conventional). |
+| Example | For example, `inverses({1, 2, 4, 1})` will return `{1: {0, 3}, 2: {1}, 4: {2}}`. If `indexing` is set to `1`, it will instead return `{1: {1, 4}, 2: {2}, 4: {3}}`. |
+
+
 
 #### `is_lowercase`
 
@@ -161,6 +179,22 @@ This is useful for many competitive programming problems seeking absolute or rel
 | Signature | `bool is_uppercase(char x)`  |
 | Usage | `x` must be a character. |
 | Example | For example, `is_uppercase('a')` will return `false`, `is_uppercase('A')` will return `true`, and `is_uppercase('#')` will return `false`. |
+
+#### `is_subset`
+
+| Description | Checks if a set is a subset of another set. |
+|---|:---|
+| Signature | `is_subset(vector<int> a, vector<int> b)`  |
+| Usage | `a` must be a vector of integers. `b` must be a vector of integers. `is_subset(a, b)` will return whether `b` is a subset of `a`. |
+| Example | For example, `is_subset({2, 1, 4}, {2})` will return `true`, `is_subset({2, 1, 4}, {2, 3})` will return `false`. |
+
+#### `is_superset`
+
+| Description | Checks if a set is a superset of another set. |
+|---|:---|
+| Signature | `is_superset(vector<int> a, vector<int> b)`  |
+| Usage | `a` must be a vector of integers. `b` must be a vector of integers. `is_superset(a, b)` will return whether `b` is a superset of `a`. |
+| Example | For example, `is_superset({2}, {2, 1, 4})` will return `true`, `is_superset({2, 3}, {2, 1, 4})` will return `false`. |
 
 #### `max` and `min`
 
@@ -191,6 +225,14 @@ This is included because the inbuilt `max` and `min` functions accept exactly tw
 | Signature | `T max_key(map<T, int> a)`  |
 | Usage | `a` must be a map from any type `T` to integers.. `max_key(a)` returns the key `T` with highest value in `a`  |
 | Example | `max_key({3: 1, 4: 2, 5: 0})` returns `4` and `max_key({"hello": 2, "world": 1})` returns `"hello"`. |
+
+#### `mex`
+
+| Description | Returns the first element not in the vector. |
+|---|:---|
+| Signature | `int mex(vector<int> items, int from=0)`  |
+| Usage |  `items` must be a vector of integers. `from`, if provided must be an integer. `mex(items, from)` the smallest integer, counting from `from` which is not in items. |
+| Example | For example, `mex({0, 1, 3, 5})` returns `2`, while `mex({1, 2, 4, 6}, 1)` returns `3` (as 0 is excluded when counting from 1). |
 
 #### `pad_left`
 
@@ -226,6 +268,24 @@ This is useful for yes/no and true/false problems on CodeForces and AtCoder.
 | Usage | `x` must be a vector of integers. `sum(x)` will return the sum of all the integers in the vector. |
 | Example | For example, `sum({3, 2, 4, 1})` will return the integer `10` and `sum({-10, 10})` will return the integer `0`. |
 
+#### `to_lower`
+
+##### 1. Character version
+
+| Description | Converts a character into the corresponding lowercase character. |
+|---|:---|
+| Signature | `char to_lower(char a)`  |
+| Usage | `a` must be a character. `to_lower(a)` will return a character which is the lowercase version of `a`. |
+| Example | For example, `to_lower('a')` returns `a` and `to_lower('A')` returns `'a'`. |
+
+##### 2. String version
+
+| Description | Converts a string into the corresponding lowercase string, character by character. |
+|---|:---|
+| Signature | `string to_lower(string a)`  |
+| Usage | `a` must be a string. `to_lower(a)` will return a string which is the lowercase version of `a`. |
+| Example | For example, `to_string("Hello World")` will return `"hello world"`. |
+
 #### `to_string`
 
 | Description | Converts an integer into the corresponding string. |
@@ -233,6 +293,24 @@ This is useful for yes/no and true/false problems on CodeForces and AtCoder.
 | Signature | `string to_string(int a)`  |
 | Usage | `a` must be an integer. `to_string(a)` will return a string with the digits of `a`. Note that this function does not work with negative integers. |
 | Example | For example, `to_string(5)` will return `"5"`, and `to_string(12)` will return `"12"`. |
+
+#### `to_upper`
+
+##### 1. Character version
+
+| Description | Converts a character into the corresponding uppercase character. |
+|---|:---|
+| Signature | `char to_upper(char a)`  |
+| Usage | `a` must be a character. `to_upper(a)` will return a character which is the uppercase version of `a`. |
+| Example | For example, `to_upper('a')` returns `A` and `to_upper('A')` returns `'A'`. |
+
+##### 2. String version
+
+| Description | Converts a string into the corresponding uppercase string, character by character. |
+|---|:---|
+| Signature | `string to_upper(string a)`  |
+| Usage | `a` must be a string. `to_upper(a)` will return a string which is the uppercase version of `a`. |
+| Example | For example, `to_upper("Hello World")` will return `"HELLO WORLD"`. |
 
 #### `vector_input`
 
