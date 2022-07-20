@@ -5,7 +5,7 @@ This is an ongoing template I am building for competitive programming contests. 
 The template is split into multiple components:
  - `socho_utils` for general utility functions I seem to be using often.
  - `socho_math` for math (especially number theory related) functions I seem to be using often.
- - `socho_graph` for graph structures and functions I seem to be using often.
+ - `socho_graph` for graph structures and functions I seem to be using often. I'm currently redesigning it; in practice I have found a lot of the tools here to be difficult to use.
 
 Future components planned include:
  - `socho_ds` for data structure components.
