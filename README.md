@@ -24,11 +24,11 @@ Anyway here is a description of how to use every function in this template, in c
 
 #### `copies`
 
-| Description | Returns the `xor` of all integers in the vector. |
+| Description | Copies a string a certain number of times. |
 |---|:---|
-| Signature | `int xor_all(vector<int> e)`  |
-| Usage | `e` must be a vector of integers. `xor_all(e)` will return the xor of all integers in the vector. |
-| Example | `xor_all({1, 4, 5, 3})` returns `3`. |
+| Signature | `string copies(string x, int c)`  |
+| Usage | `x` must be a string. `c` must be an integer. `copies(x, c)` will a string with `c` copies of `x`. |
+| Example | `copies("hello", 3)` returns `"hellohellohello"`. |
 
 #### `count`
 
@@ -134,9 +134,9 @@ This is useful for many competitive programming problems seeking absolute or rel
 
 | Description | Calculates the number of integers in the range between two integers (both ends inclusive). |
 |---|:---|
-| Signature | `int inrange(int a, int b)`  |
-| Usage | `a` must be an integer. `b` must be an integer. `inrange(a, b)` will return the number of integers in `[a, b]` |
-| Example | For example, `inrange(5, 8)` will return the integer `4` (since 5, 6, 7 and 8 are in the range) while `inrange(3, 1)` will return `0`, since it checks for numbers greater than or equal to `3`, as well as less than or equal to `1`, of which there are none. |
+| Signature | `int in_range(int a, int b)`  |
+| Usage | `a` must be an integer. `b` must be an integer. `in_range(a, b)` will return the number of integers in `[a, b]` |
+| Example | For example, `in_range(5, 8)` will return the integer `4` (since 5, 6, 7 and 8 are in the range) while `in_range(3, 1)` will return `0`, since it checks for numbers greater than or equal to `3`, as well as less than or equal to `1`, of which there are none. |
 
 #### `interval_union`
 
@@ -216,7 +216,7 @@ This is included because the inbuilt `max` and `min` functions accept exactly tw
 |---|:---|
 | Signature | `T min(vector<T> a)`  |
 | Usage | `a` must be a vector of any type. `min(a)` returns the minimum value in `a`. |
-| Example | `min({1, 2})` returns `2`. |
+| Example | `min({1, 2})` returns `1`. |
 
 #### `max_key`
 
@@ -238,9 +238,9 @@ This is included because the inbuilt `max` and `min` functions accept exactly tw
 
 | Description | Pads a string to at least a certain length, using a certain character. |
 |---|:---|
-| Signature | `string padleft(string x, int len, char c='0')`  |
-| Usage | `x` must be a string. `len` must be an integer. `c`, if provided, must be a character, otherwise it will default to `'0'`. `padleft(x, len, c)` will left-pad `x` to a length of at least `len`, using the character `c`. |
-| Example | For example, `padleft("hi", 5, '-')` will return `"---hi"`, while `padleft("hello", 2)` will return `"hello"`, since the target length is already met with the input string.|
+| Signature | `string pad_left(string x, int len, char c='0')`  |
+| Usage | `x` must be a string. `len` must be an integer. `c`, if provided, must be a character, otherwise it will default to `'0'`. `pad_left(x, len, c)` will left-pad `x` to a length of at least `len`, using the character `c`. |
+| Example | For example, `pad_left("hi", 5, '-')` will return `"---hi"`, while `pad_left("hello", 2)` will return `"hello"`, since the target length is already met with the input string.|
 
 #### `printif`
 
@@ -284,7 +284,7 @@ This is useful for yes/no and true/false problems on CodeForces and AtCoder.
 |---|:---|
 | Signature | `string to_lower(string a)`  |
 | Usage | `a` must be a string. `to_lower(a)` will return a string which is the lowercase version of `a`. |
-| Example | For example, `to_string("Hello World")` will return `"hello world"`. |
+| Example | For example, `to_lower("Hello World")` will return `"hello world"`. |
 
 #### `to_string`
 
